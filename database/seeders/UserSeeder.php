@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // HR
-        User::updateOrCreate(
+        $hr = User::updateOrCreate(
             
             ['email' => 'budi@gmail.com'],
             [
@@ -27,13 +27,13 @@ class UserSeeder extends Seeder
         // Manager
         $manager = User::updateOrCreate(
             ['email' => 'ibnu@gmail.com'],
-            [
-                'name' => 'Ibnu',
-                'password' => Hash::make('ibnu123'),
-                'role' => 'manager',
-                'is_active' => true,
-                'manager_id' => null,
-            ]
+                [
+                    'name' => 'Ibnu',
+                    'password' => Hash::make('password'),
+                    'role' => 'manager',
+                    'is_active' => true,
+                    'manager_id' => $hr->id,   // ← atasan Ibnu = Budi (HR)
+                ]
         );
 
         // Employee A
