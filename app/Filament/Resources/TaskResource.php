@@ -108,12 +108,16 @@ class TaskResource extends Resource
     {
         return $table
             ->columns([
+                // Judul: limit 45 karakter, tooltip menampilkan judul lengkap saat hover
                 Tables\Columns\TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
                     ->sortable()
-                    ->limit(40),
+                    ->limit(45)
+                    ->tooltip(fn (Task $record): string => $record->title)
+                    ->wrap(),
 
+                // Status: badge dengan warna sesuai status
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
@@ -125,8 +129,10 @@ class TaskResource extends Resource
                         'completed' => 'success',
                         'cancelled' => 'danger',
                         default => 'gray',
-                    }),
+                    })
+                    ->sortable(),
 
+                // Prioritas: badge dengan warna sesuai tingkat prioritas
                 Tables\Columns\TextColumn::make('priority')
                     ->label('Prioritas')
                     ->badge()
@@ -137,22 +143,41 @@ class TaskResource extends Resource
                         'high' => 'warning',
                         'urgent' => 'danger',
                         default => 'gray',
-                    }),
+                    })
+                    ->sortable(),
 
+                // Jatuh Tempo: dengan indikator merah jika lewat deadline
                 Tables\Columns\TextColumn::make('due_date')
                     ->label('Jatuh Tempo')
                     ->date('d M Y')
-                    ->sortable(),
+                    ->sortable()
+                    ->color(function (Task $record): string {
+                        // Merah jika tugas aktif dan sudah lewat deadline
+                        if ($record->due_date && $record->isActive() && $record->due_date->isPast()) {
+                            return 'danger';
+                        }
+                        return 'gray';
+                    })
+                    ->description(function (Task $record): string {
+                        // Tampilkan peringatan jika lewat deadline
+                        if ($record->due_date && $record->isActive() && $record->due_date->isPast()) {
+                            return '⚠ Lewat deadline!';
+                        }
+                        return '';
+                    }),
 
+                // Penerima tugas (label lebih singkat)
                 Tables\Columns\TextColumn::make('assignedTo.name')
-                    ->label('Ditugaskan Kepada')
+                    ->label('Penerima')
                     ->sortable()
                     ->searchable(),
 
+                // Dibuat oleh: bisa di-hide/show oleh user (hemat space)
                 Tables\Columns\TextColumn::make('creator.name')
                     ->label('Dibuat Oleh')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('status')
@@ -164,15 +189,22 @@ class TaskResource extends Resource
                     ->options(Task::PRIORITY_OPTIONS),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Edit dan Delete sebagai icon button agar lebih compact
+                Tables\Actions\EditAction::make()
+                    ->iconButton()
+                    ->tooltip('Edit tugas'),
+                
+                Tables\Actions\DeleteAction::make()
+                    ->iconButton()
+                    ->tooltip('Hapus tugas'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('created_at', 'desc')
+            ->poll('60s'); // Auto-refresh setiap 60 detik
     }
 
     public static function getPages(): array

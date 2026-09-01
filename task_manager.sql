@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2026 at 06:19 AM
+-- Generation Time: Sep 01, 2026 at 03:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('manajemen_tugas_dan_evaluasi_perfoma_karyawan_cache_livewire-rate-limiter:a17961fa74e9275d529f489537f179c05d50c2f3', 'i:1;', 1787199762),
-('manajemen_tugas_dan_evaluasi_perfoma_karyawan_cache_livewire-rate-limiter:a17961fa74e9275d529f489537f179c05d50c2f3:timer', 'i:1787199762;', 1787199762);
+('manajemen_tugas_dan_evaluasi_perfoma_karyawan_cache_livewire-rate-limiter:a17961fa74e9275d529f489537f179c05d50c2f3', 'i:1;', 1788226411),
+('manajemen_tugas_dan_evaluasi_perfoma_karyawan_cache_livewire-rate-limiter:a17961fa74e9275d529f489537f179c05d50c2f3:timer', 'i:1788226411;', 1788226411);
 
 -- --------------------------------------------------------
 
@@ -116,8 +116,6 @@ CREATE TABLE `manager_evaluations` (
   `manager_id` bigint(20) UNSIGNED NOT NULL,
   `score` tinyint(3) UNSIGNED NOT NULL,
   `note` text DEFAULT NULL,
-  `employee_feedback` text DEFAULT NULL,
-  `employee_feedback_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -126,8 +124,8 @@ CREATE TABLE `manager_evaluations` (
 -- Dumping data for table `manager_evaluations`
 --
 
-INSERT INTO `manager_evaluations` (`id`, `task_id`, `manager_id`, `score`, `note`, `employee_feedback`, `employee_feedback_at`, `created_at`, `updated_at`) VALUES
-(1, 2, 6, 5, 'pertahnkan kinerja kamu, tugas kamu sudah sesuai dengan apa yang client mau', 'terima kasi pak, saya akan lebih maksimal lagi', '2026-08-19 19:10:40', '2026-08-19 18:42:06', '2026-08-19 19:10:40');
+INSERT INTO `manager_evaluations` (`id`, `task_id`, `manager_id`, `score`, `note`, `created_at`, `updated_at`) VALUES
+(1, 2, 6, 5, 'pertahnkan kinerja kamu, tugas kamu sudah sesuai dengan apa yang client mau', '2026-08-19 18:42:06', '2026-08-19 19:10:40');
 
 -- --------------------------------------------------------
 
@@ -153,7 +151,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2026_08_12_064224_create_tasks_table', 1),
 (6, '2026_08_12_064244_create_manager_evaluations_table', 1),
 (7, '2026_08_12_064310_create_receiver_evaluations_table', 1),
-(8, '2026_08_20_015246_add_employee_feedback_to_manager_evaluations_table', 2);
+(8, '2026_08_20_015246_add_employee_feedback_to_manager_evaluations_table', 2),
+(9, '2026_08_26_064006_remove_employee_feedback_columns_from_manager_evaluations', 3);
 
 -- --------------------------------------------------------
 
@@ -184,6 +183,13 @@ CREATE TABLE `receiver_evaluations` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `receiver_evaluations`
+--
+
+INSERT INTO `receiver_evaluations` (`id`, `task_id`, `receiver_id`, `clarity_score`, `difficulty_score`, `note`, `created_at`, `updated_at`) VALUES
+(1, 2, 8, 5, 3, 'kjgsnkj\n', '2026-08-26 00:14:49', '2026-08-26 00:14:49');
+
 -- --------------------------------------------------------
 
 --
@@ -204,7 +210,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('WN5Gn1Wot7LshO79wkP6aydxVGtZSHuIJQJQtbqT', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoibUV1RU9xM0lQUFdnbHlMWGVYWjVmOUNjRDZzUk9ld0xyVm5oNXNIbCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi90YXNrcyI7czo1OiJyb3V0ZSI7czozNjoiZmlsYW1lbnQuYWRtaW4ucmVzb3VyY2VzLnRhc2tzLmluZGV4Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2NDoiM2YyZjMzMDA4NjFlYTFiNDI4ZDJjNjczODRhNjIyODFjN2Y2ZDdjMGM1NDkzZGFlMzgxZTU1NDllNDYzYWQ5NyI7fQ==', 1787206110);
+('GGSmZu0k5sVtUOwT4x95NKIc5WBefTUBYRLJlIZj', 8, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoicVhiSjQ4Y2RPeVZIQW5lR1BsY29YOFVXN3dxZTNtb0x6SWtFU3ljZiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9ldmFsdWF0aW9uLWZlZWRiYWNrcyI7czo1OiJyb3V0ZSI7czo1MToiZmlsYW1lbnQuYWRtaW4ucmVzb3VyY2VzLmV2YWx1YXRpb24tZmVlZGJhY2tzLmluZGV4Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6ODtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2NDoiM2U3ZDI2NWE3ZTQ3MGE1NWZmOTNmMjYzYjlkZTA4OTI0NmFmYWUzZmQwODk4MzU1ZmM2NWQ1ODIxN2U2YWYzOSI7fQ==', 1788226378);
 
 -- --------------------------------------------------------
 
@@ -231,7 +237,9 @@ CREATE TABLE `tasks` (
 
 INSERT INTO `tasks` (`id`, `title`, `description`, `status`, `priority`, `due_date`, `assigned_by`, `assigned_to_user_id`, `created_at`, `updated_at`) VALUES
 (1, 'buatkan desain untuk aplikasi e-commers', 'saya ingin melihat desain uml nya', 'completed', 'medium', '2026-08-21', 1, 6, '2026-08-12 00:26:40', '2026-08-19 19:46:02'),
-(2, 'tolong buatan desain UML untu aplikasi e-commers', 'buatan dari usecase sampe activity diagramnya', 'completed', 'high', '2026-08-22', 6, 8, '2026-08-12 00:29:07', '2026-08-19 18:29:27');
+(2, 'tolong buatan desain UML untu aplikasi e-commers', 'buatan dari usecase sampe activity diagramnya', 'completed', 'high', '2026-08-22', 6, 8, '2026-08-12 00:29:07', '2026-08-19 18:29:27'),
+(4, 'Buatkan aplikasi mini untuk e-commers', 'Saya ingin piksi mini untuk e-commers ', 'in_progress', 'high', '2026-09-10', 6, 7, '2026-08-25 20:17:23', '2026-08-26 00:20:51'),
+(5, 'Toong buatkan Perancangan sistem untuk e-commers', 'buatkan sesuai apa mu client', 'in_progress', 'medium', '2026-09-01', 6, 8, '2026-08-25 20:18:53', '2026-08-25 20:22:08');
 
 -- --------------------------------------------------------
 
@@ -258,10 +266,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `is_active`, `manager_id`) VALUES
-(1, 'Budi', 'budi@gmail.com', NULL, '$2y$12$8r3UyhbtupvBCXCzOl9FqeerEsTxHhbiwOF./1D4UEs2k97yMtzvO', NULL, '2026-08-12 00:16:14', '2026-08-12 00:16:14', 'hr', 1, NULL),
-(6, 'Ibnu', 'ibnu@gmail.com', NULL, '$2y$12$oEz6X6d99fM.lpjglsFrW.8dH873iZDGpMfdXKAnNvk2LE.x5BjSi', NULL, '2026-08-12 00:16:14', '2026-08-12 00:16:14', 'manager', 1, NULL),
-(7, 'Rivan', 'rifan@gmail.com', NULL, '$2y$12$3UTksPtXdw/hIyAlZG3tfuyz2eJKmhfzbtR/KuVFAOtLZLgeS0IJe', NULL, '2026-08-12 00:16:14', '2026-08-12 00:16:14', 'employee', 1, 6),
-(8, 'Davez', 'davez@gmail.com', NULL, '$2y$12$wIPUySPMFxnKYdkIpti4QeElyyF4Dl/dTW7ZFr7JX8qOmeLl2PhQ6', NULL, '2026-08-12 00:16:15', '2026-08-12 00:16:15', 'employee', 1, 6);
+(1, 'Budi', 'budi@gmail.com', NULL, '$2y$12$y/j5RoQLH6KUVxO9.GbTXesBXz47llNmVK3ohodf22r00Ak2rE7Z2', NULL, '2026-08-12 00:16:14', '2026-08-20 23:21:36', 'hr', 1, NULL),
+(6, 'Ibnu', 'ibnu@gmail.com', NULL, '$2y$12$HYm8Rl3yALpSGB2h8eZRCe7pdpJloyxtAJJgHLtQBKrIzg99Icd6C', NULL, '2026-08-12 00:16:14', '2026-08-20 23:21:37', 'manager', 1, 1),
+(7, 'Rivan', 'rifan@gmail.com', NULL, '$2y$12$GaUPNIx8njMWdAy7dM6D.uYUzoQZhidNB6ujbOdZCFHuWUre2QXYi', NULL, '2026-08-12 00:16:14', '2026-08-20 23:21:37', 'employee', 1, 6),
+(8, 'Davez', 'davez@gmail.com', NULL, '$2y$12$wJnyQgu9LlNY.d1vazwVTOFapyk0L2cjxD51hBp4JiftW1OK0ueru', NULL, '2026-08-12 00:16:15', '2026-08-20 23:21:37', 'employee', 1, 6);
 
 --
 -- Indexes for dumped tables
@@ -380,19 +388,19 @@ ALTER TABLE `manager_evaluations`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `receiver_evaluations`
 --
 ALTER TABLE `receiver_evaluations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`

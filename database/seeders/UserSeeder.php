@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             ['email' => 'ibnu@gmail.com'],
                 [
                     'name' => 'Ibnu',
-                    'password' => Hash::make('password'),
+                    'password' => Hash::make('ibnu123'),
                     'role' => 'manager',
                     'is_active' => true,
                     'manager_id' => $hr->id,   // ← atasan Ibnu = Budi (HR)

@@ -54,7 +54,6 @@ class UserResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->orderByRaw("FIELD(role, 'hr', 'manager', 'employee')")
             ->orderBy('name');
     }
 
@@ -109,40 +108,6 @@ class UserResource extends Resource
                     ])
                     ->columns(2),
             ]);
-    }
-
-    /** Validasi backend: cegah assign diri sendiri & pastikan manager valid. */
-    public static function mutateFormDataBeforeCreate(array $data): array
-    {
-        if (! empty($data['manager_id'])) {
-            $manager = User::find($data['manager_id']);
-            abort_unless(
-                $manager !== null && in_array($manager->role, ['manager', 'hr'], true),
-                422, 'Atasan harus ber-role Manager atau HR.'
-            );
-        }
-
-        return $data;
-    }
-
-    public static function mutateFormDataBeforeSave(array $data): array
-    {
-        $currentId = request()->route('record')?->id ?? null;
-
-        if (! empty($data['manager_id'])) {
-            abort_unless(
-                $data['manager_id'] != $currentId,
-                422, 'Seorang user tidak boleh menjadi atasan bagi dirinya sendiri.'
-            );
-
-            $manager = User::find($data['manager_id']);
-            abort_unless(
-                $manager !== null && in_array($manager->role, ['manager', 'hr'], true),
-                422, 'Atasan harus ber-role Manager atau HR.'
-            );
-        }
-
-        return $data;
     }
 
     public static function table(Table $table): Table

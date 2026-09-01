@@ -37,7 +37,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                \App\Filament\Widgets\TaskStatsWidget::class,
                 \App\Filament\Widgets\WorkloadBurnoutWidget::class,
+                \App\Filament\Widgets\WorkloadChartWidget::class,
+                \App\Filament\Widgets\TaskStatusChartWidget::class,
             ])
             ->navigationGroups([
                 'Master Data',
