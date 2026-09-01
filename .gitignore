@@ -6,4 +6,5 @@
 /.idea/
 .DS_Store
 composer.lock
-
+/.history
+/public/hot

@@ -30,4 +30,5 @@ class CreateUser extends CreateRecord
 
         return $data;
     }
+
 }
