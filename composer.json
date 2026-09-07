@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "athaillah22/managemen-evaluasi",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Aplikasi Manajemen Tugas dan Evaluasi Performa Karyawan dengan 360-degree feedback dan pemantauan beban kerja (burnout risk).",
+    "keywords": ["laravel", "filament", "manajemen-tugas", "evaluasi-performa", "burnout"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
